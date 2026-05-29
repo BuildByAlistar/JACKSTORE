@@ -131,7 +131,7 @@ function App() {
   useEffect(() => {
     let isMounted = true;
 
-    const fetchStorefrontData = async () => {
+    const fetchStorefrontCatalog = async () => {
       try {
         setLoading(true);
         setError("");
@@ -187,10 +187,16 @@ function App() {
       }
     };
 
-    fetchStorefrontData();
+    const handleRefreshRequest = () => {
+      fetchStorefrontCatalog();
+    };
+
+    fetchStorefrontCatalog();
+    window.addEventListener("jackstudio-storefront-refresh", handleRefreshRequest);
 
     return () => {
       isMounted = false;
+      window.removeEventListener("jackstudio-storefront-refresh", handleRefreshRequest);
     };
   }, []);
 
